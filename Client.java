@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
@@ -8,7 +7,7 @@ public class Client {
         try {
             Socket clientSocket = new Socket("127.0.0.1", 6666);
             ClientConnection clientConnection = new ClientConnection(clientSocket);
-            clientConnection.start();
+            clientConnection.run();
 
             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
             String userInput;
