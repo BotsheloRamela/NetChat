@@ -62,8 +62,11 @@ public class Client implements Runnable{
                 shutdown();
             }
         }
+    }
 
-        
+    public static void main(String[] args) {
+        Client client = new Client();
+        client.run();
     }
     
 }
