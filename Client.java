@@ -25,7 +25,7 @@ public class Client implements Runnable{
                 System.out.println(inMessage);
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            shutdown();
         }
     }
 
