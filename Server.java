@@ -17,5 +17,13 @@ public class Server implements Runnable {
             // TODO: handle exception
         }
     }
+
+    public void broadcastMessage(String message) {
+        for (ConnectionHandler ch: connections) {
+            if (ch != null) {
+                ch.sendMessage(message);
+            }
+        }
+    }
     
 }
