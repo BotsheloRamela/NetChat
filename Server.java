@@ -21,6 +21,7 @@ public class Server implements Runnable {
                 Socket client = server.accept();
                 ConnectionHandler handler = new ConnectionHandler(client);
                 connections.add(handler);
+                handler.addNewConnection(handler);
             }
         } catch (Exception e) {
             shutdownServer();
@@ -34,7 +35,7 @@ public class Server implements Runnable {
                 server.close();
             }
             for (ConnectionHandler ch : connections) {
-                ch.shutdownServer();
+                ch.shutdownClient();
             }
         } catch (Exception e) {
             // TODO: handle exception

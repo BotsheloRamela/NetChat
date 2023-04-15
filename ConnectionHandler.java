@@ -30,23 +30,19 @@ public class ConnectionHandler implements Runnable{
             while ((message = input.readLine()) != null) {
                 if (message.startsWith("/quit" )) {
                     broadcastMessage(nickname + " left the room!");
-                    shutdownServer();
+                    shutdownClient();
                 } else {
                     broadcastMessage(nickname + ": " + message);
                 } 
             }
             
         } catch (Exception e) {
-            shutdownServer();
+            shutdownClient();
         }
     }
 
     public void sendMessage(String messaeg) {
         output.println(messaeg);
-    }
-
-    public static void addNewConnection(ConnectionHandler handler) {
-        connections.add(handler);
     }
 
     public void broadcastMessage(String message) {
@@ -57,7 +53,11 @@ public class ConnectionHandler implements Runnable{
         }
     }
 
-    public void shutdownServer() {
+    public void addNewConnection(ConnectionHandler handler) {
+        connections.add(handler);
+    }
+
+    public void shutdownClient() {
         try {
             input.close();
             output.close();
