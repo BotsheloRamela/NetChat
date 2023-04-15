@@ -3,22 +3,26 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Client{
+public class Client {
     public static void main(String[] args) {
         try {
-            Socket socket = new Socket("127.0.0.1", 6666);
-            BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter socketOutput = new PrintWriter(socket.getOutputStream(), true);
-            InputHandler inputHandler = new InputHandler(socketOutput);
-            Thread inputThread = new Thread(inputHandler);
-            inputThread.start();
-            String message;
-            while ((message = socketInput.readLine()) != null) {
-                System.out.println(message);
+            Socket clientSocket = new Socket("127.0.0.1", 6666);
+            ClientConnection clientConnection = new ClientConnection(clientSocket);
+            clientConnection.start();
+
+            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            String userInput;
+            while ((userInput = consoleReader.readLine()) != null) {
+                if (userInput.equals("/quit")) {
+                    clientConnection.disconnect();
+                    consoleReader.close();
+                    break;
+                } else {
+                    clientConnection.sendMessage(userInput);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 }
