@@ -14,8 +14,10 @@ public class Client {
             String userInput;
             while ((userInput = consoleReader.readLine()) != null) {
                 if (userInput.equals("/quit")) {
+                    clientConnection.sendMessage(userInput);
                     clientConnection.disconnect();
                     consoleReader.close();
+                    thread.interrupt(); // interrupt the thread to stop it
                     break;
                 } else {
                     clientConnection.sendMessage(userInput);
