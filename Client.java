@@ -7,7 +7,8 @@ public class Client {
         try {
             Socket clientSocket = new Socket("127.0.0.1", 6666);
             ClientConnection clientConnection = new ClientConnection(clientSocket);
-            clientConnection.run();
+            Thread thread = new Thread(clientConnection);
+            thread.start();
 
             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
             String userInput;
