@@ -4,18 +4,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ConnectionHandler  implements Runnable{
+public class ConnectionHandler implements Runnable{
+
     private Socket client;
     private BufferedReader input;
     private PrintWriter output;
     private String nickname;
     private Server server;
-
+    
     public ConnectionHandler(Socket client, Server server) {
         this.client = client;
         this.server = server;
     }
-
+    
     @Override
     public void run() {
         try {
@@ -27,15 +28,15 @@ public class ConnectionHandler  implements Runnable{
             server.broadcastMessage(nickname + " joined the room!");
             String message;
             while ((message = input.readLine()) != null) {
-                if (message.startsWith("/quit")) {
+                if (message.startsWith("/quit" )) {
                     server.broadcastMessage(nickname + " left the room!");
                     shutdownClient();
                 } else {
                     server.broadcastMessage(nickname + ": " + message);
-                }
+                } 
             }
-
-        } catch (Exception e) {
+            
+        } catch (IOException e) {
             shutdownClient();
         }
     }
@@ -43,6 +44,7 @@ public class ConnectionHandler  implements Runnable{
     public void sendMessage(String message) {
         output.println(message);
     }
+
 
     public void shutdownClient() {
         try {

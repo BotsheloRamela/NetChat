@@ -1,10 +1,12 @@
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server implements Runnable {
+public class Server {
+
     private ArrayList<ConnectionHandler> connections;
     private ServerSocket server;
     private boolean done;
@@ -14,9 +16,8 @@ public class Server implements Runnable {
         connections = new ArrayList<>();
         done = false;
     }
-
-    @Override
-    public void run() {
+    
+    public void start() {
         try {
             server = new ServerSocket(6666);
             threadPool = Executors.newCachedThreadPool();
@@ -26,7 +27,7 @@ public class Server implements Runnable {
                 connections.add(handler);
                 threadPool.execute(handler);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             shutdownServer();
         }
     }
@@ -41,13 +42,13 @@ public class Server implements Runnable {
             for (ConnectionHandler ch : connections) {
                 ch.shutdownClient();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             // TODO: handle exception
         }
     }
 
     public void broadcastMessage(String message) {
-        for (ConnectionHandler ch : connections) {
+        for (ConnectionHandler ch: connections) {
             if (ch != null) {
                 ch.sendMessage(message);
             }
@@ -56,6 +57,7 @@ public class Server implements Runnable {
 
     public static void main(String[] args) {
         Server server = new Server();
-        server.run();
+        server.start();
     }
+
 }
