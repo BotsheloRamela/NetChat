@@ -8,7 +8,7 @@ The group chat app has an intuitive and user-friendly interface that allows user
 
 Overall, the Java TCP client-server group chat app with encrypted messages is an excellent choice for organizations or groups that require secure communication channels. It provides a convenient and reliable way for users to communicate and collaborate, ensuring that their messages remain private and secure.
 
-<h3>How to run NetChat</h3>
+# How to run NetChat
 
 ### Requirements
 - You need to have Java installed on your system
