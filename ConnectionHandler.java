@@ -29,7 +29,8 @@ public class ConnectionHandler implements Runnable{
             String message;
             while ((message = input.readLine()) != null) {
                 if (message.startsWith("/quit" )) {
-                     // TODO: hanndle nickname
+                    broadcastMessage(nickname + " left the room!");
+                    shutdownServer();
                 } else {
                     broadcastMessage(nickname + ": " + message);
                 } 
