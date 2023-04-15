@@ -7,6 +7,7 @@ public class Client implements Runnable{
     private Socket client;
     private BufferedReader input;
     private PrintWriter output;
+    private boolean done;
 
     @Override
     public void run() {
@@ -17,6 +18,40 @@ public class Client implements Runnable{
         } catch (Exception e) {
             // TODO: handle exception
         }
+    }
+
+    class InputHandler implements Runnable {
+    
+        @Override
+        public void run() {
+            
+            try {
+                BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
+                while (!done) {
+                    String message = inReader.readLine();
+                    if (message.equals("/quite")) {
+                        inReader.close();
+                        shutdown();
+                    }
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+    
+        public void shutdown() {
+            done = true;
+            try {
+                input.close();
+                output.close();
+                if (!client.isClosed()) {
+                    client.close();
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+        
     }
     
 }
