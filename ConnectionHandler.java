@@ -13,6 +13,7 @@ public class ConnectionHandler implements Runnable{
     public ConnectionHandler(Socket client) {
         this.client = client;
     }
+
     @Override
     public void run() {
         try {
@@ -24,6 +25,10 @@ public class ConnectionHandler implements Runnable{
         } catch (Exception e) {
             // TODO: handle exception
         }
+    }
+
+    public void sendMessage(String messaeg) {
+        output.println(messaeg);
     }
     
 }
