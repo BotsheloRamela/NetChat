@@ -7,3 +7,28 @@ The application is built using Java Socket programming to establish a TCP connec
 The group chat app has an intuitive and user-friendly interface that allows users to send and receive messages seamlessly. The app also includes features like creating and joining chat rooms, sending private messages, and receiving notifications. The application can be easily customized to suit the needs of different organizations and groups.
 
 Overall, the Java TCP client-server group chat app with encrypted messages is an excellent choice for organizations or groups that require secure communication channels. It provides a convenient and reliable way for users to communicate and collaborate, ensuring that their messages remain private and secure.
+
+<h3>How to run NetChat</h3>
+
+### Requirements
+- You need to have Java installed on your system
+
+### Server Options
+- To run NetChat on your local machine change the client socket host in Client.java to use the host `127.0.0.1`. This is set by default.
+- To run NetChat on your local network:
+    1. Identifyy the IP address of the computer where the NetChat server will run. You can do this by opening a command prompt or terminal and typing "ipconfig" or "ifconfig"
+    2. Make sure that the computer's firewall is configured to allow incoming connections on the port used by the NetChat server.
+    3. Change the host to the IP address
+
+### Step 1: Compile
+First compile `Server.java` and `Client.java`
+- `javac Server.java`
+- `javac Client.java`
+
+### Step 2: Start the server
+Start the server on one machine.
+- `java Server`
+
+### Step 3: Start the client
+The client should be started on all machines that you intend to join the chat on.
+- `java Client`
