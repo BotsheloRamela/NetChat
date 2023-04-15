@@ -33,11 +33,10 @@ public class ConnectionHandler implements Runnable{
                 } else {
                     broadcastMessage(nickname + ": " + message);
                 } 
-
             }
             
         } catch (Exception e) {
-            // TODO: handle exception
+            shutdownServer();
         }
     }
 
