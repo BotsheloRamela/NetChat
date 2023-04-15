@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -13,8 +14,12 @@ public class ConnectionHandler implements Runnable{
     }
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
+        try {
+            output = new PrintWriter(client.getOutputStream(), true);
+            input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
     
 }
