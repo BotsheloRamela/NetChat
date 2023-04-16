@@ -36,16 +36,10 @@ public class AESEncryptionDecryption {
     @param secret the secret key to use for encryption
     @return the encrypted message as a Base64-encoded string
     */
-    public String encrypt(String msgToEncrypt, String secret) {
-        try {
-            prepareSecretKey(secret);
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(msgToEncrypt.getBytes("UTF-8")));
-        } catch (Exception e) {
-            System.out.println("Error while encrypting: " + e.toString());
-        }
-        return null;
+    public String encrypt(String msgToEncrypt, SecretKeySpec secretKey) throws Exception {
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        return Base64.getEncoder().encodeToString(cipher.doFinal(msgToEncrypt.getBytes(StandardCharsets.UTF_8)));
     }
 
     /**
