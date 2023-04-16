@@ -7,12 +7,20 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+
+/**
+* The AESEncryptionDecryption class provides methods for encrypting and decrypting
+messages using the AES algorithm.
+*/
 public class AESEncryptionDecryption {
     private static SecretKeySpec secretKey;
     private static byte[] key;
     private static final String ALGORITHM = "AES";
 
-
+    /**
+    * Generates a secret key based on the given string.
+    * @param myKey the string to use as a base for generating the secret key
+    */
     public void prepareSecretKey(String myKey) {
         MessageDigest sha = null;
         try {
@@ -26,6 +34,13 @@ public class AESEncryptionDecryption {
         }
     } 
 
+    /**
+    Encrypts a message using the given secret key and returns the encrypted message
+    as a Base64-encoded string.
+    @param msgToEncrypt the message to encrypt
+    @param secret the secret key to use for encryption
+    @return the encrypted message as a Base64-encoded string
+    */
     public String encrypt(String msgToEncrypt, String secret) {
         try {
             prepareSecretKey(secret);
@@ -38,6 +53,13 @@ public class AESEncryptionDecryption {
         return null;
     }
 
+    /**
+    Decrypts a message using the given secret key and returns the decrypted message
+    as a string.
+    @param msgToDecrypt the message to decrypt as a Base64-encoded string
+    @param secret the secret key to use for decryption
+    @return the decrypted message as a string
+    */
     public String decrypt(String msgToDecrypt, String secret) {
         try {
             prepareSecretKey(secret);
@@ -49,6 +71,4 @@ public class AESEncryptionDecryption {
         }
         return null;
     }
-
-    
 }
