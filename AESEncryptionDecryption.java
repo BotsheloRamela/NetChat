@@ -12,6 +12,7 @@ public class AESEncryptionDecryption {
     private static byte[] key;
     private static final String ALGORITHM = "AES";
 
+
     public void prepareSecretKey(String myKey) {
         MessageDigest sha = null;
         try {
@@ -36,4 +37,18 @@ public class AESEncryptionDecryption {
         }
         return null;
     }
+
+    public String decrypt(String msgToDecrypt, String secret) {
+        try {
+            prepareSecretKey(secret);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return new String(cipher.doFinal(Base64.getDecoder().decode(msgToDecrypt)));
+        } catch (Exception e) {
+            System.out.println("Error while decrypting: " + e.toString());
+        }
+        return null;
+    }
+
+    
 }
