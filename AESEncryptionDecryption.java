@@ -13,8 +13,6 @@ import javax.crypto.spec.SecretKeySpec;
 messages using the AES algorithm.
 */
 public class AESEncryptionDecryption {
-    private static SecretKeySpec secretKey;
-    private static byte[] key;
     private static final String ALGORITHM = "AES";
 
     /**
@@ -49,15 +47,9 @@ public class AESEncryptionDecryption {
     @param secret the secret key to use for decryption
     @return the decrypted message as a string
     */
-    public String decrypt(String msgToDecrypt, String secret) {
-        try {
-            prepareSecretKey(secret);
-            Cipher cipher = Cipher.getInstance(ALGORITHM);
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(msgToDecrypt)));
-        } catch (Exception e) {
-            System.out.println("Error while decrypting: " + e.toString());
-        }
-        return null;
+    public String decrypt(String msgToDecrypt, SecretKeySpec secretKey) throws Exception {
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        return new String(cipher.doFinal(Base64.getDecoder().decode(msgToDecrypt)), StandardCharsets.UTF_8);
     }
 }
