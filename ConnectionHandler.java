@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.spec.SecretKeySpec;
 
 
 /**
@@ -19,7 +22,7 @@ public class ConnectionHandler implements Runnable{
     private PrintWriter output; // output stream to client
     private String nickname; // the nickname of the client
     private Server server; // reference to the server instance
-    private String secretKey = "secrete"; // the encryption key
+    private SecretKeySpec secretKey; // the encryption key
     AESEncryptionDecryption aesEncryptionDecryption; // AES encryption/decryption object
 
     /**
@@ -31,6 +34,12 @@ public class ConnectionHandler implements Runnable{
         this.client = client;
         this.server = server;
         this.aesEncryptionDecryption = new AESEncryptionDecryption();
+        try {
+            this.secretKey = aesEncryptionDecryption.generateSecretKey("secret");
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -61,7 +70,7 @@ public class ConnectionHandler implements Runnable{
                 } 
             }
             
-        } catch (IOException e) {
+        } catch (Exception e) {
             shutdownClient();
         }
     }
