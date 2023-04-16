@@ -11,14 +11,18 @@ public class ConnectionHandler implements Runnable{
     private PrintWriter output;
     private String nickname;
     private Server server;
+    private String secretKey = "secrete";
+    AESEncryptionDecryption aesEncryptionDecryption;
     
     public ConnectionHandler(Socket client, Server server) {
         this.client = client;
         this.server = server;
+        this.aesEncryptionDecryption = new AESEncryptionDecryption();
     }
     
     @Override
     public void run() {
+        
         try {
             output = new PrintWriter(client.getOutputStream(), true);
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -27,12 +31,14 @@ public class ConnectionHandler implements Runnable{
             System.out.println(nickname + " connected!");
             server.broadcastMessage(nickname + " joined the room!");
             String message;
+            
             while ((message = input.readLine()) != null) {
                 if (message.startsWith("/quit" )) {
                     server.broadcastMessage(nickname + " left the room!");
                     shutdownClient();
                 } else {
-                    server.broadcastMessage(nickname + ": " + message);
+                    String encryptedMessage = aesEncryptionDecryption.encrypt(message, secretKey);
+                    server.broadcastMessage(nickname + ": " + encryptedMessage);
                 } 
             }
             
@@ -42,6 +48,7 @@ public class ConnectionHandler implements Runnable{
     }
 
     public void sendMessage(String message) {
+        // String decryptedMessage = aesEncryptionDecryption.decrypt(message, secretKey);
         output.println(message);
     }
 
