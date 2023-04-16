@@ -21,18 +21,13 @@ public class AESEncryptionDecryption {
     * Generates a secret key based on the given string.
     * @param myKey the string to use as a base for generating the secret key
     */
-    public void prepareSecretKey(String myKey) {
-        MessageDigest sha = null;
-        try {
-            key = myKey.getBytes(StandardCharsets.UTF_8);
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
-            secretKey = new SecretKeySpec(key, ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    } 
+    public SecretKeySpec generateSecretKey(String myKey) throws NoSuchAlgorithmException {
+        byte[] key = myKey.getBytes(StandardCharsets.UTF_8);
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16);
+        return new SecretKeySpec(key, ALGORITHM);
+    }
 
     /**
     Encrypts a message using the given secret key and returns the encrypted message
