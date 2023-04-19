@@ -24,6 +24,7 @@ public class ConnectionHandler implements Runnable{
     private Server server; // reference to the server instance
     private SecretKeySpec secretKey; // the encryption key
     AESEncryptionDecryption aesEncryptionDecryption; // AES encryption/decryption object
+    private boolean isEncrypted;
 
     /**
      * Constructor for ConnectionHandler class.
@@ -34,6 +35,7 @@ public class ConnectionHandler implements Runnable{
         this.client = client;
         this.server = server;
         this.aesEncryptionDecryption = new AESEncryptionDecryption();
+        this.isEncrypted = false;
         try {
             this.secretKey = aesEncryptionDecryption.generateSecretKey("secret");
         } catch (NoSuchAlgorithmException e) {
