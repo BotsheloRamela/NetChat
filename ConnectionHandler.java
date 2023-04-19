@@ -85,7 +85,13 @@ public class ConnectionHandler implements Runnable{
      * @param message the message to send
      */
     public void sendMessage(String message) {
-        // String decryptedMessage = aesEncryptionDecryption.decrypt(message, secretKey);
+        try {
+            String decryptedMessage = aesEncryptionDecryption.decrypt(message, secretKey);
+            output.println(decryptedMessage);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         output.println(message);
     }
 
