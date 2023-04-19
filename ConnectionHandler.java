@@ -63,6 +63,7 @@ public class ConnectionHandler implements Runnable{
             while ((message = input.readLine()) != null) {
                 if (message.startsWith("/quit" )) {
                     server.broadcastMessage(nickname + " left the room!");
+                    System.out.println(nickname + " disconnected from the server!");
                     shutdownClient();
                 } else {
                     String encryptedMessage = aesEncryptionDecryption.encrypt(message, secretKey);
