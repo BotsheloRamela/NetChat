@@ -61,6 +61,7 @@ public class ConnectionHandler implements Runnable{
             System.out.println(nickname + " connected!");
             server.broadcastMessage(nickname + " joined the room!");
             String message;
+            this.isEncrypted = false;
             
             while ((message = input.readLine()) != null) {
                 if (message.startsWith("/quit" )) {
@@ -68,6 +69,7 @@ public class ConnectionHandler implements Runnable{
                     System.out.println(nickname + " disconnected from the server!");
                     shutdownClient();
                 } else {
+                    this.isEncrypted = true;
                     String encryptedMessage = aesEncryptionDecryption.encrypt(message, secretKey);
                     server.broadcastMessage(nickname + ": " + encryptedMessage);
                 } 
